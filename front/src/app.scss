@@ -1,0 +1,21 @@
+#root,
+#app {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.message-bar-layer {
+  z-index: 2000000;
+}
+
+@media screen and (min-width: 1200px) {
+  #root,
+  #app {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+  }
+}

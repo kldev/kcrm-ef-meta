@@ -1,0 +1,33 @@
+@baseUrl = http://localhost:8080
+
+
+### login root
+# @name appToken
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "Username": "admin",
+    "Password": "654321"
+}
+
+###
+@token = {{appToken.response.body.token}}
+
+### get countries
+POST {{baseUrl}}/api/common/countries
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "query": "pol"
+}
+
+### get countries
+POST {{baseUrl}}/api/common/countries
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "query": "gb"
+}

@@ -1,0 +1,30 @@
+{
+  "files.associations": {
+    "*.jsx": "javascriptreact"
+  },
+  "[typescript]": {
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "[typescriptreact]": {
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "cSpell.words": ["Scrollable", "uifabric"],
+  "editor.tabSize": 2,
+  "search.exclude": {
+    "node_modules": true,
+    "build": true
+  }
+}

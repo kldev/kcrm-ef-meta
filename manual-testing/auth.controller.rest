@@ -1,0 +1,88 @@
+@baseUrl = http://localhost:8080
+
+### login failed
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "Username": "admin",
+    "Password": "admin123"
+}
+
+
+
+### login root
+# @name appToken
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "Username": "root",
+    "Password": "123456"
+}
+
+### Get me
+# @name getMe
+GET {{baseUrl}}/api/aegis/me
+Authorization: Bearer {{appToken.response.body.token}}
+
+
+### login admin
+# @name appToken2
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "Username": "admin",
+    "Password": "654321"
+}
+
+### Get me
+# @name getMe
+GET {{baseUrl}}/api/aegis/me
+Authorization: Bearer {{appToken2.response.body.token}}
+
+
+### use refresh token
+GET {{baseUrl}}/api/auth/refresh/{{appToken2.response.body.refreshToken}}
+Content-Type: application/json
+
+
+### Get project tags
+GET {{baseUrl}}/api/aegis/project-tags
+Authorization: Bearer {{appToken2.response.body.token}}
+
+
+### Get project stats
+GET {{baseUrl}}/api/aegis/project-stats
+Authorization: Bearer {{appToken2.response.body.token}}
+
+
+### Get users stats
+GET {{baseUrl}}/api/aegis/users-stats
+Authorization: Bearer {{appToken2.response.body.token}}
+@baseUrl = http://localhost:8080
+
+### login root
+# @name appToken
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "Username": "root",
+    "Password": "123456"
+}
+
+### Get project
+GET {{baseUrl}}/api/project
+Authorization: Bearer {{appToken.response.body.token}}
+
+
+### Get project stats
+GET {{baseUrl}}/api/project/stats
+Authorization: Bearer {{appToken.response.body.token}}
+
+
+### Get project tags
+GET {{baseUrl}}/api/project/529ff65d-14a5-45ad-8ea0-ae6248b02f11/tags
+Authorization: Bearer {{appToken.response.body.token}}

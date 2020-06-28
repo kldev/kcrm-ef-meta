@@ -1,0 +1,12 @@
+version: "3.7"
+services: 
+    postgres:        
+        image: postgres:11.8        
+        ports:
+            - "${DB_PORT:-15432}:5432"
+        volumes:
+            - pg.data:/var/lib/postgresql/data        
+        environment:            
+            POSTGRES_PASSWORD: developer.7777
+volumes: 
+    pg.data:            

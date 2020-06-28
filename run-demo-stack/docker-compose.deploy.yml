@@ -1,0 +1,26 @@
+version: "3.7"
+services: 
+    web-db:                        
+        environment:            
+            POSTGRES_PASSWORD: E^qb9MDM!kLpyj$rHu8!GaJQRuu       
+    front:
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        healthcheck:    
+            test: ["CMD", "curl", "-f", "http://localhost/index.html"]
+            interval: 10s
+            timeout: 10s
+            retries: 5
+            start_period: 15s             
+    web-api:        
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost/healthz"]
+            interval: 10s
+            timeout: 10s
+            retries: 5
+            start_period: 15s
+        environment:
+            AuthConfig__Secret: "PRWEc*4NjXQfWP0@33b0zOifQsTLR%"
+            ConnectionStrings__AppConnection: "Server=web-db;Port=5432;Database=kcrm;Username=postgres;Password=E^qb9MDM!kLpyj$rHu8!GaJQRuu"
+            ConnectionStrings__AegisConnection: "Server=web-db;Port=5432;Database=kcrm;Username=postgres;Password=E^qb9MDM!kLpyj$rHu8!GaJQRuu"                  
+   

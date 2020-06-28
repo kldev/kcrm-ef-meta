@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>KCrm.Aegis.Migrator</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\001_ProjetTagsView.sql" />
+    <EmbeddedResource Include="Scripts\001_ProjetTagsView.sql" />
+
+     <None Remove="Scripts\002_ProjectStartedStatsView.sql" />
+    <EmbeddedResource Include="Scripts\002_ProjectStartedStatsView.sql" />
+    <None Remove="Scripts\003_RolesAndUsersView.sql" />
+    <EmbeddedResource Include="Scripts\003_RolesAndUsersView.sql" />
+  </ItemGroup>
+
+
+
+   <ItemGroup>
+    <PackageReference Include="dbup-postgresql" Version="4.3.0" />
+    <PackageReference Include="dbup-sqlserver" Version="4.3.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
+  </ItemGroup>
+  
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+
+  <ItemGroup>
+    <ProjectReference Include="..\KCrm.Data.Aegis\KCrm.Data.Aegis.csproj" />
+  </ItemGroup>
+
+</Project>

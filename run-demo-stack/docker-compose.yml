@@ -1,0 +1,36 @@
+version: "3.7"
+services: 
+    web-db:        
+        image: postgres:11.8                
+        volumes:
+            - pg.data:/var/lib/postgresql/data        
+        environment:            
+            POSTGRES_PASSWORD: demo.7777                    
+    web-api:
+        image: "web-api:${APP_TAGS:-latest}"
+        build: 
+            context: ../KCrm
+            dockerfile: Dockerfile            
+        environment:
+            APP_VERSION: ${APP_TAGS:-latest}
+            AuthConfig__Secret: "PRWEc*4NjXQfWP0@33b0zOifQsTLR%"
+            ConnectionStrings__AppConnection: "Server=web-db;Port=5432;Database=kcrm;Username=postgres;Password=demo.7777"
+            ConnectionStrings__AegisConnection: "Server=web-db;Port=5432;Database=kcrm;Username=postgres;Password=demo.7777"
+        depends_on: 
+            - web-db
+        links: 
+            - web-db
+    front:
+        image: crm-front:${APP_TAGS:-latest}
+        ports:
+            - "${APP_PORT:-8080}:80"
+        build:
+            context: ../front
+            dockerfile: Dockerfile
+            args: 
+                APP_VER: ${APP_TAGS}
+        links:
+            - web-api
+
+volumes: 
+    pg.data:            

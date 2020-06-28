@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:8080
+
+
+### login admin
+# @name appToken
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "Username": "admin",
+    "Password": "654321"
+}
+
+###
+@token = {{appToken.response.body.token}}
+@refreshToken ={{appToken.response.body.refreshToken}}
+
+### get projects
+GET {{baseUrl}}/api/users/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
