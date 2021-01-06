@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^11.4.2",
     "@uifabric/icons": "^7.3.50",
     "@uifabric/styling": "^7.12.17",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "moment": "^2.27.0",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
