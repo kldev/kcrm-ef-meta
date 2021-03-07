@@ -17,16 +17,24 @@ type ModelErrors<TType, TKeys extends keyof TType> = {
 export const useProjectsApiClient = () => {
   const dispatch = useDispatch();
   const t = useLocale();
+  const [isLoading, setIsLoading] = useState(false);
   const [projects, setProjects] = useState<ProjectDto[]>([]);
   const [errors, setErrors] = useState<
     ModelErrors<ProjectDto, ProjectDtoKeys>
   >();
 
   const getProjects = useCallback(async () => {
-    const result = await projectApi.getProjects();
+    setIsLoading(true);
+    try {
+      const result = await projectApi.getProjects();
 
-    setProjects(result);
-    return result;
+      setProjects(result);
+      setIsLoading(false);
+      return result;
+    } catch (err) {
+      //
+    }
+    setIsLoading(false);
   }, []);
 
   const validateProject = useCallback(
@@ -81,7 +89,7 @@ export const useProjectsApiClient = () => {
         dispatch(
           addMessage({
             messageType: MessageBarType.error,
-            content: t(error.errorCode as AllTranslationKeys),
+            content: t(error.error as AllTranslationKeys),
           })
         );
         return null;
@@ -97,5 +105,6 @@ export const useProjectsApiClient = () => {
     getProjects,
     projects,
     errors,
+    isLoading,
   };
 };

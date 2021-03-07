@@ -1,4 +1,4 @@
 export interface ErrorDto {
-  errorCode: string;
+  error: string;
   message: string;
 }

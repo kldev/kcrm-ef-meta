@@ -14,4 +14,5 @@ export const ProjectsTranslationPL: ProjectsTranslationType = {
   ProjectTypeERP: 'ERP',
   ProjectTypeOpenSource: 'Open-source',
   ProjectTypeResearchAndDevelopment: 'R&D',
+  CreateProjectCommandNameAlreadyUsed: 'Nazwa jest juz zajęta',
 };

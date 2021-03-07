@@ -20,14 +20,15 @@ const ProjectAddPanel: React.FC<Props> = (props) => {
   const [startDate, setStartDate] = useState<Date>(new Date());
   const { addProject, errors } = useProjectsApiClient();
   const [addedId, setAddedId] = useState('');
+  const { onAdded } = props;
 
   const t = useLocale();
 
   useEffect(() => {
     if (addedId) {
-      props.onAdded(addedId);
+      onAdded(addedId);
     }
-  }, [addedId, props]);
+  }, [addedId, onAdded]);
 
   const handelOnDismiss = () => {
     props.onClose();

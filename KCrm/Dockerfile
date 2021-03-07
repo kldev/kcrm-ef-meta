@@ -25,12 +25,14 @@ RUN ls -la
 RUN cd KCrm.Server.Api && dotnet publish -c release -o /build/out
 RUN ls -la /build/out
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal
 
 WORKDIR /app
 COPY --from=build /build/out .
 RUN ls -la
 ENV ASPNETCORE_ENVIRONMENT Docker 
 ENV ASPNETCORE_URLS http://*:80
+RUN apt-get update
+RUN apt-get install -qq curl
 EXPOSE 80
 ENTRYPOINT ["dotnet", "KCrm.Server.Api.dll"]

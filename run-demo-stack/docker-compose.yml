@@ -20,6 +20,8 @@ services:
             - web-db
         links: 
             - web-db
+        ports:
+            - "${WEBAPI_PORT:-30788}:80"    
     front:
         image: crm-front:${APP_TAGS:-latest}
         ports:

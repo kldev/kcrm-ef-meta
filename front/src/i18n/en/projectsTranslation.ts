@@ -12,6 +12,7 @@ export const ProjectsTranslation = {
   ProjectTypeERP: 'ERP',
   ProjectTypeOpenSource: 'Open-source',
   ProjectTypeResearchAndDevelopment: 'R&D',
+  CreateProjectCommandNameAlreadyUsed: 'Name is already in use',
 };
 
 export type ProjectsTranslationKeys = keyof typeof ProjectsTranslation;

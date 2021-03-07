@@ -1,20 +1,18 @@
 import React, { useCallback } from 'react';
-import {
-  CommandBar,
-  ICommandBarItemProps,
-  ICommandBarStyles,
-} from '@fluentui/react/lib/CommandBar';
+import { CommandBar, ICommandBarStyles } from '@fluentui/react/lib/CommandBar';
 import { useLocale } from 'i18n/useLocale';
 import { BaseIdDto } from 'api/response/BaseIdDto';
+import { IAppCommandBarItemProps } from '..';
 
 interface Props {
   onNew?: () => void; //
-  items?: ICommandBarItemProps[];
-  farItems?: ICommandBarItemProps[];
+  items?: IAppCommandBarItemProps[];
+  farItems?: IAppCommandBarItemProps[];
   selectedItems?: BaseIdDto[];
 }
 
 const ListCommandBar: React.FC<Props> = (props) => {
+  const { items, farItems, selectedItems, onNew } = props;
   const t = useLocale();
 
   const style: Partial<ICommandBarStyles> = {
@@ -25,39 +23,50 @@ const ListCommandBar: React.FC<Props> = (props) => {
     },
   };
 
-  const items = useCallback(() => {
-    return [
+  const displayItems = useCallback(() => {
+    let localItems = [
       {
         key: 'New',
-        onClick: props.onNew,
+        onClick: onNew,
         text: t('AddNew'),
         iconProps: {
           iconName: 'Add',
         },
       },
       {
-        disabled: !props.selectedItems || !props.selectedItems.length,
+        disabled: !selectedItems || !selectedItems.length,
+
         key: 'Delete',
         text: `${t('DeleteSelected')} (${
-          props.selectedItems && props.selectedItems.length
+          (selectedItems && selectedItems.length) || 0
         })`,
         iconProps: {
           iconName: 'Trash',
         },
       },
-    ].filter((x) => !x.disabled) as ICommandBarItemProps[];
-  }, [props, t]);
+    ] as IAppCommandBarItemProps[];
+
+    if (items && items.length > 0) {
+      localItems = localItems.concat(items);
+    }
+
+    return localItems.filter((x) => x.skip !== true);
+  }, [items, selectedItems, onNew, t]);
 
   const setupFarItems = useCallback(() => {
-    const farItems: ICommandBarItemProps[] = [];
-    if (props.farItems && props.farItems.length > 0) {
-      farItems.concat(props.farItems);
+    let localItems: IAppCommandBarItemProps[] = [];
+    if (farItems && farItems.length > 0) {
+      localItems = localItems.concat(farItems);
     }
-    return farItems;
-  }, [props.farItems]);
+    return localItems;
+  }, [farItems]);
 
   return (
-    <CommandBar styles={style} items={items()} farItems={setupFarItems()} />
+    <CommandBar
+      styles={style}
+      items={displayItems()}
+      farItems={setupFarItems()}
+    />
   );
 };
 

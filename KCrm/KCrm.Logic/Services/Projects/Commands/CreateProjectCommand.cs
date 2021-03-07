@@ -36,7 +36,7 @@ namespace KCrm.Logic.Services.Projects.Commands {
                 .AnyAsync (x => x.Name == request.Name, cancellationToken);
 
             if (alreadyUsedName)
-                throw new AppLogicRuleException ($"{nameof (CreateProjectCommand)}.NameAlreadyUsed",
+                throw new AppLogicRuleException ($"{nameof (CreateProjectCommand)}NameAlreadyUsed",
                     "The name is already used");
 
             await _projectContext.Projects.AddAsync (project, cancellationToken);
@@ -50,11 +50,11 @@ namespace KCrm.Logic.Services.Projects.Commands {
 
     public class CreateProjectCommandValidator : AbstractValidator<CreateProjectCommand> {
         public CreateProjectCommandValidator() {
-            RuleFor (x => x.Name).NotNull ( ).WithErrorCode ($"{nameof (CreateProjectCommand)}.Name.NotNull").WithMessage ("Can not be null or empty");
+            RuleFor (x => x.Name).NotNull ( ).WithErrorCode ($"{nameof (CreateProjectCommand)}NameNotNull").WithMessage ("Can not be null or empty");
             RuleFor (x => x.Name).MaximumLength (120)
-                .WithErrorCode ($"{nameof (CreateProjectCommand)}.Name.MaxLength120");
+                .WithErrorCode ($"{nameof (CreateProjectCommand)}NameMaxLength120");
             RuleFor (x => x.Name).MinimumLength (3)
-                .WithErrorCode ($"{nameof (CreateProjectCommand)}.Name.MinimumLength3")
+                .WithErrorCode ($"{nameof (CreateProjectCommand)}NameMinimumLength3")
                 .WithMessage ("Minimum length is 3 characters");
         }
     }
