@@ -1,11 +1,18 @@
-import { authProvider } from 'auth/AuthProvider';
+import { SessionDto } from 'api/response';
+
 import { AppConfig } from 'config';
 import { BaseApiClient } from './BaseApiClient';
 
 class UsersApiClient extends BaseApiClient {
+  UsersAPI = '/api/users';
+
   logOut = async (): Promise<void> => {
-    await this.get('/api/users/logout');
-    authProvider.deleteAuth();
+    await this.get(`${this.UsersAPI}/logout/`);
+  };
+
+  session = async (): Promise<SessionDto | null> => {
+    const { data } = await this.get<SessionDto>(`${this.UsersAPI}/session`);
+    return data || null;
   };
 }
 

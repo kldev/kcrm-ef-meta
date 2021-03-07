@@ -26,6 +26,7 @@ export const useAuthApiClient = () => {
         setSession({
           username,
           role: data.role,
+          fullname: data.fullname,
         })
       );
 

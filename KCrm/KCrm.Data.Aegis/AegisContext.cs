@@ -1,89 +1,109 @@
-﻿using KCrm.Data.Aegis.Entity;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using KCrm.Data.Aegis.Entity;
 
-namespace KCrm.Data.Aegis {
-    public partial class AegisContext : DbContext {
-        public AegisContext() {
+#nullable disable
+
+namespace KCrm.Data.Aegis
+{
+    public partial class AegisContext : DbContext
+    {
+        public AegisContext()
+        {
         }
 
         public AegisContext(DbContextOptions<AegisContext> options)
-            : base (options) {
+            : base(options)
+        {
         }
 
-        public virtual DbSet<ProjectStartedStats> ProjectStartedStats { get; set; }
-        public virtual DbSet<ProjectTags> ProjectTags { get; set; }
-        public virtual DbSet<Schemaversions> Schemaversions { get; set; }
-        public virtual DbSet<UserAndRoles> UserAndRoles { get; set; }
+        public virtual DbSet<ProjectStartedStat> ProjectStartedStats { get; set; }
+        public virtual DbSet<ProjectTag> ProjectTags { get; set; }
+        public virtual DbSet<Schemaversion> Schemaversions { get; set; }
+        public virtual DbSet<UserAndRole> UserAndRoles { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            if (!optionsBuilder.IsConfigured) {
-                optionsBuilder.UseNpgsql ("Name=AegisConnection");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql("Name=AegisConnection");
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<ProjectStartedStats> (entity => {
-                entity.HasNoKey ( );
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasAnnotation("Relational:Collation", "en_US.utf8");
 
-                entity.ToTable ("project_started_stats", "aegis");
+            modelBuilder.Entity<ProjectStartedStat>(entity =>
+            {
+                entity.HasNoKey();
 
-                entity.Property (e => e.Count).HasColumnName ("count");
+                entity.ToTable("project_started_stats", "aegis");
 
-                entity.Property (e => e.Month).HasColumnName ("month");
+                entity.Property(e => e.Count).HasColumnName("count");
 
-                entity.Property (e => e.Monthnumber).HasColumnName ("monthnumber");
+                entity.Property(e => e.Month).HasColumnName("month");
 
-                entity.Property (e => e.Year).HasColumnName ("year");
+                entity.Property(e => e.Monthnumber).HasColumnName("monthnumber");
+
+                entity.Property(e => e.Year).HasColumnName("year");
             });
 
-            modelBuilder.Entity<ProjectTags> (entity => {
-                entity.HasNoKey ( );
+            modelBuilder.Entity<ProjectTag>(entity =>
+            {
+                entity.HasNoKey();
 
-                entity.ToTable ("project_tags", "aegis");
+                entity.ToTable("project_tags", "aegis");
 
-                entity.Property (e => e.Projectname)
-                    .HasColumnName ("projectname")
-                    .HasMaxLength (1024);
+                entity.Property(e => e.Projectname)
+                    .HasMaxLength(1024)
+                    .HasColumnName("projectname");
 
-                entity.Property (e => e.Projectstags)
-                    .HasColumnName ("projectstags")
-                    .HasColumnType ("json");
+                entity.Property(e => e.Projectstags)
+                    .HasColumnType("json")
+                    .HasColumnName("projectstags");
             });
 
-            modelBuilder.Entity<Schemaversions> (entity => {
-                entity.ToTable ("schemaversions", "aegis");
+            modelBuilder.Entity<Schemaversion>(entity =>
+            {
+                entity.HasKey(e => e.Schemaversionsid)
+                    .HasName("PK_schemaversions_Id");
 
-                entity.Property (e => e.Schemaversionsid).HasColumnName ("schemaversionsid");
+                entity.ToTable("schemaversions", "aegis");
 
-                entity.Property (e => e.Applied).HasColumnName ("applied");
+                entity.Property(e => e.Schemaversionsid).HasColumnName("schemaversionsid");
 
-                entity.Property (e => e.Scriptname)
-                    .IsRequired ( )
-                    .HasColumnName ("scriptname")
-                    .HasMaxLength (255);
+                entity.Property(e => e.Applied).HasColumnName("applied");
+
+                entity.Property(e => e.Scriptname)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("scriptname");
             });
 
-            modelBuilder.Entity<UserAndRoles> (entity => {
-                entity.HasNoKey ( );
+            modelBuilder.Entity<UserAndRole>(entity =>
+            {
+                entity.HasNoKey();
 
-                entity.ToTable ("user_and_roles", "aegis");
+                entity.ToTable("user_and_roles", "aegis");
 
-                entity.Property (e => e.Id).HasColumnName ("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property (e => e.Roles)
-                    .HasColumnName ("roles")
-                    .HasColumnType ("json");
+                entity.Property(e => e.RoleId).HasColumnName("role_id");
 
-                entity.Property (e => e.Topusers)
-                    .HasColumnName ("topusers")
-                    .HasColumnType ("json");
+                entity.Property(e => e.Roles)
+                    .HasColumnType("json")
+                    .HasColumnName("roles");
 
-                entity.Property (e => e.UserId).HasColumnName ("user_id");
+                entity.Property(e => e.Topusers)
+                    .HasColumnType("json")
+                    .HasColumnName("topusers");
 
-                entity.Property (e => e.UserRoleId).HasColumnName ("user_role_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 
-            OnModelCreatingPartial (modelBuilder);
+            OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useLocale } from 'i18n/useLocale';
 import { addMessage } from 'store/message';
 import { MessageBarType } from '@fluentui/react/lib/MessageBar';
+import { AllTranslationKeys } from 'i18n/en';
 
 type ProjectDtoKeys = keyof ProjectDto;
 
@@ -51,7 +52,6 @@ export const useProjectsApiClient = () => {
         )}`;
         hasErrors = true;
 
-        hasErrors = true;
         dispatch(
           addMessage({
             messageType: MessageBarType.warning,
@@ -75,11 +75,21 @@ export const useProjectsApiClient = () => {
         return null;
       }
 
-      const result = await projectApi.createProject(project);
+      const { data, error } = await projectApi.createProject(project);
 
-      return result.id;
+      if (error) {
+        dispatch(
+          addMessage({
+            messageType: MessageBarType.error,
+            content: t(error.errorCode as AllTranslationKeys),
+          })
+        );
+        return null;
+      }
+
+      return data && data.id;
     },
-    [validateProject]
+    [validateProject, dispatch, t]
   );
 
   return {

@@ -5,7 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using KCrm.Core.Entity.Tags;
-using KCrm.Data.Context;
+using KCrm.Data.Projects;
+using KCrm.Data.Tags;
 using KCrm.Logic.Services.Tags.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +41,7 @@ namespace KCrm.Logic.Services.Projects.Queries {
             return new List<TagDto> ( );
         }
         
-        private async Task<List<Tag>> GetBatchAsync(Guid[] ids, CancellationToken cancellationToken) {
+        private async Task<List<TagEntity>> GetBatchAsync(Guid[] ids, CancellationToken cancellationToken) {
 
             if (ids == null || ids.Length == 0) throw new ArgumentException ("Tag Ids must be provided");
 

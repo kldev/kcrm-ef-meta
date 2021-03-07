@@ -4,6 +4,7 @@ using KCrm.Logic.Core;
 using KCrm.Logic.Security.Interfaces;
 using KCrm.Logic.Services.Auth.Model;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace KCrm.Logic.Services.Auth.Commands {
     public class LoginUserCommand : IRequest<ResponseBase<AuthDto>> {
@@ -14,9 +15,11 @@ namespace KCrm.Logic.Services.Auth.Commands {
     public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ResponseBase<AuthDto>> {
 
         private readonly IAuthenticateService _authenticateService;
-        
-        public LoginUserCommandHandler(IAuthenticateService authenticateService) {
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public LoginUserCommandHandler(IAuthenticateService authenticateService, IHttpContextAccessor contextAccessor) {
             _authenticateService = authenticateService;
+            _contextAccessor = contextAccessor;
         }
 
         public async  Task<ResponseBase<AuthDto>> Handle(LoginUserCommand request, CancellationToken cancellationToken) {

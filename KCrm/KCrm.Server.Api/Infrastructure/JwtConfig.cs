@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using KCrm.Core.Definition;
 using KCrm.Logic.Config;
+using KCrm.Server.Api.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +31,19 @@ namespace KCrm.Server.Api.Infrastructure {
                     ValidateAudience = false,
                     RequireExpirationTime = true,
                     ClockSkew = TimeSpan.Zero
+                };
+                
+                x.Events = new JwtBearerEvents ( ) {
+                    OnMessageReceived = context => {
+                        if (context.Request.Headers.ContainsKey ("X-CLIENT-TOKEN")) {
+                            // x-client token access
+                        }
+                        else {
+                            context.Token = context.Request.Cookies[WebConstants.JwtCookieName];
+                        }
+
+                        return Task.CompletedTask;
+                    }
                 };
             });
 

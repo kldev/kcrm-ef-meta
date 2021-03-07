@@ -11,4 +11,4 @@ echo "Migration name $NAME"
 cd ../KCrm
 echo $(cd . && pwd)
 
-dotnet ef  migrations add $NAME -o Migrations/Users -c KCrm.Data.Context.AppUserContext -p KCrm.Data --startup-project KCrm.Server.Api
+dotnet ef  migrations add $NAME -o __Migrations/AppUsers -c KCrm.Data.Users.AppUserContext -p KCrm.Data --startup-project KCrm.Server.Api

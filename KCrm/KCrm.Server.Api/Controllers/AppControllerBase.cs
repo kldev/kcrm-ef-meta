@@ -11,7 +11,7 @@ namespace KCrm.Server.Api.Controllers {
                 : BadRequest (result.Error);
         }
 
-        private IActionResult ApiError(ErrorDto resultError, HttpStatusCode errorStatusCode) {
+        protected IActionResult ApiError(ErrorDto resultError, HttpStatusCode errorStatusCode) {
             var status = new ObjectResult (resultError) { StatusCode = (int)errorStatusCode };
             return status;
         }

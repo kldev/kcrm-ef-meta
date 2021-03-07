@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using KCrm.Core.Entity.Common;
+using KCrm.Core.Entity.GeoLocation;
 using KCrm.Logic.Services.Common.Model;
 
 namespace KCrm.Logic.Services.Common {
@@ -10,7 +10,7 @@ namespace KCrm.Logic.Services.Common {
         }
 
         private void CommonMapping() {
-            CreateMap<Country, CountryDto> ( ).ReverseMap ( );
+            CreateMap<CountryEntity, CountryDto> ( ).ReverseMap ( );
         }
     }
 }

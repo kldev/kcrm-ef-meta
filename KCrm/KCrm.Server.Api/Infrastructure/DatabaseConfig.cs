@@ -1,5 +1,8 @@
 ﻿using KCrm.Data.Aegis;
-using KCrm.Data.Context;
+using KCrm.Data.GeoLocation;
+using KCrm.Data.Projects;
+using KCrm.Data.Tags;
+using KCrm.Data.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +27,7 @@ namespace KCrm.Server.Api.Infrastructure {
             Setup<TagContext> (services, configuration);
             SetupAegis (services, configuration);
             Setup<AppUserContext> (services, configuration);
-            Setup<CommonContext> (services, configuration);
+            Setup<GeoLocationContext> (services, configuration);
             return services;
         }
 

@@ -22,7 +22,7 @@ namespace KCrm.Logic.Services.Projects.Notifications {
                 _logger.LogInformation ($"Project with ID Has been created: {notification.ProjectId}");
                 System.Threading.Thread.Sleep (5000);
                 _logger.LogInformation ($"Project notification processed");
-            });
+            }, cancellationToken);
             return Task.CompletedTask;
         }
     }

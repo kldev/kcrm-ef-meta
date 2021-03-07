@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using KCrm.Data.Context;
+using KCrm.Data.Tags;
 using KCrm.Logic.Services.Tags.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

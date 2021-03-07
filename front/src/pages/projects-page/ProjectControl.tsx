@@ -1,8 +1,8 @@
 import React from 'react';
-import { ProjectControlCommand } from './ProjectControlCommand';
 import { IRefObject, initializeComponentRef } from '@fluentui/react';
-import ProjectAddPanel from './ProjectAddPanel';
 import { EntityId } from 'model/EntityId';
+import { ProjectControlCommand } from './ProjectControlCommand';
+import ProjectAddPanel from './ProjectAddPanel';
 
 interface Props {
   componentRef?: IRefObject<ProjectControlCommand>;
@@ -29,6 +29,7 @@ class ProjectControl extends React.Component<Props, State>
       isOpen: true,
     });
   };
+
   openEdit = (projectId: EntityId) => {
     //
   };

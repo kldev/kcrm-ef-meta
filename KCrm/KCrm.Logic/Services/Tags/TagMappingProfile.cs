@@ -9,7 +9,7 @@ namespace KCrm.Logic.Services.Tags {
         }
 
         private void TagMapping() {
-            CreateMap<Tag, TagDto> ( ).ReverseMap ( );
+            CreateMap<TagEntity, TagDto> ( ).ReverseMap ( );
         }
     }
 }

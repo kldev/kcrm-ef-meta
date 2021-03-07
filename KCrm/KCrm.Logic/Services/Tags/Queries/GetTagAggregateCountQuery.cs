@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using KCrm.Core.Model.Data;
-using KCrm.Data.Context;
+using KCrm.Data.Tags;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

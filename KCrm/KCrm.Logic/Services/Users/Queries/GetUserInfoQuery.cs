@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using KCrm.Data.Context;
+using KCrm.Data.Users;
 using KCrm.Logic.Core;
 using KCrm.Logic.Services.Users.Model;
 using MediatR;
@@ -23,7 +23,7 @@ namespace KCrm.Logic.Services.Users.Queries {
 
         public async Task<ResponseBase<UserInfoDto>> Handle(GetUserInfoQuery request, CancellationToken cancellationToken) {
 
-            var user = await _appUserContext.AppUsers.FirstAsync (x => x.Id == request.UserId, cancellationToken);
+            var user = await _appUserContext.UserAccounts.FirstAsync (x => x.Id == request.UserId, cancellationToken);
 
             if (user == null) {
                 return new ResponseBase<UserInfoDto> (new ErrorDto ( ) {

@@ -21,6 +21,7 @@ namespace KCrm.Server.Api {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
 
+            services.AddSeedSetup (Configuration);
             services.AddHttpContextAccessor ( );
             services.AddAutoMapper (typeof (ProjectMappingProfile));
             services.AddCrmDatabases (Configuration);
@@ -33,7 +34,6 @@ namespace KCrm.Server.Api {
             services.AddSwaggerService ( );
             services.AddJwt (Configuration);
             services.AddAppHealthCheck (Configuration);
-
             services.AddHostedService<DbMigrateService> ( );
         }
 

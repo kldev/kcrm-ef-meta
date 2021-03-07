@@ -1,7 +1,7 @@
 CREATE VIEW aegis.user_and_roles as
 SELECT
     UR.id,
-    UR.user_role_id,
+    UR.role_id,
     UR.user_id,
     (
         select
@@ -11,9 +11,9 @@ SELECT
                 select
                     *
                 from
-                    app.app_user_roles
+                    app.user_roles
                 where
-                    app.app_user_roles.Id = UR.user_role_id
+                    app.user_roles.Id = UR.role_id
             ) u
     ) as Roles,
     (
@@ -22,11 +22,11 @@ SELECT
         from
             (
                 select
-                    *
+                    id, username, email, created, provider
                 from
-                    app.app_users
+                    app.user_accounts
                 where
-                        app.app_users.Id = UR.user_id
+                        app.user_accounts.Id = UR.user_id
                 order by
                     created desc
                     limit
@@ -34,4 +34,4 @@ SELECT
             ) u
     ) as TopUsers
 FROM
-    app.user_has_roles UR;    
+    app.user_has_roles UR;  

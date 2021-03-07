@@ -29,7 +29,7 @@ namespace KCrm.Logic.Security {
                 "self",
                 null,
                 claims,
-                expires: DateTime.UtcNow.AddMinutes (15),
+                expires: DateTime.UtcNow.AddDays (1),
                 signingCredentials: credentials
             );
             var token = new JwtSecurityTokenHandler ( ).WriteToken (jwtToken);

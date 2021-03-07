@@ -2,11 +2,9 @@ import Axios, { AxiosInstance } from 'axios';
 
 import { AppConfig } from 'config/AppConfig';
 import { LoginRequest } from 'api/request';
-import { AuthDto, ErrorDto } from 'api/response';
-import { authProvider } from 'auth/AuthProvider';
+import { SessionDto, ErrorDto } from 'api/response';
 
 const LoginPath = 'api/auth/login';
-const RefreshTokenPath = 'api/auth/refresh';
 
 class AuthApi {
   private api: AxiosInstance;
@@ -15,6 +13,7 @@ class AuthApi {
     this.api = Axios.create({
       baseURL: `${baseUrl}`,
       headers: {},
+      withCredentials: true,
       // / handle api status when used
       validateStatus: (status) => {
         return true;
@@ -26,33 +25,11 @@ class AuthApi {
 
   login = async (
     req: LoginRequest
-  ): Promise<{ data?: AuthDto; error?: ErrorDto }> => {
-    const response = await this.api.post<AuthDto | ErrorDto>(LoginPath, req);
+  ): Promise<{ data?: SessionDto; error?: ErrorDto }> => {
+    const response = await this.api.post<SessionDto | ErrorDto>(LoginPath, req);
 
     if (response.status === 200) {
-      const auth = response.data as AuthDto;
-
-      authProvider.storeAuth(auth);
-
-      return { data: auth };
-    }
-
-    return { error: response.data as ErrorDto };
-  };
-
-  useRefreshToken = async (
-    refreshToken: string
-  ): Promise<{ data?: AuthDto; error?: ErrorDto }> => {
-    const response = await this.api.get<AuthDto | ErrorDto>(
-      `${RefreshTokenPath}/${refreshToken}`
-    );
-
-    if (response.status === 200) {
-      const auth = response.data as AuthDto;
-
-      authProvider.storeAuth(auth);
-
-      return { data: auth };
+      return { data: response.data as SessionDto };
     }
 
     return { error: response.data as ErrorDto };

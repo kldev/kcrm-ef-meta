@@ -12,14 +12,14 @@ namespace KCrm.Logic.Services.Projects {
         }
 
         private void ProjectMapping() {
-            CreateMap<Project, ProjectDto> ( ).ReverseMap ( );
+            CreateMap<ProjectEntity, ProjectDto> ( ).ReverseMap ( );
             CreateMap<ProjectStartedStats, ProjectStartedStatDto> ( )
                 .ForMember (x => x.Month, y => y.MapFrom<int> (src => (int)src.Monthnumber))
                 .ForMember (x => x.Year, y => y.MapFrom<int> (src => int.Parse (src.Year)))
                 .ForMember (x => x.Count, y => y.MapFrom<int> (src => (int)(src.Count)))
                 .ReverseMap ( );
 
-            CreateMap<CreateProjectCommand, Project> ( ).ConstructUsing (x => new Project ( ) {
+            CreateMap<CreateProjectCommand, ProjectEntity> ( ).ConstructUsing (x => new ProjectEntity ( ) {
                 Id = Guid.NewGuid ( ),
                 Description = x.Description,
                 Name = x.Name,

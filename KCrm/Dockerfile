@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /build
 
 COPY KCrm.Core/*.csproj KCrm.Core/ 
@@ -25,7 +25,7 @@ RUN ls -la
 RUN cd KCrm.Server.Api && dotnet publish -c release -o /build/out
 RUN ls -la /build/out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 
 WORKDIR /app
 COPY --from=build /build/out .

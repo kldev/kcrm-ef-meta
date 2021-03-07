@@ -23,14 +23,6 @@ const LocaleMenu: React.FC = (props) => {
   const disptatch = useDispatch();
 
   const subMenu = useCallback(() => {
-    const setLocalePl = () => {
-      disptatch(setLocale({ locale: 'pl' }));
-    };
-
-    const setLocaleEn = () => {
-      disptatch(setLocale({ locale: 'en' }));
-    };
-
     const localMenu: IContextualMenuProps = {
       items: [
         {
@@ -39,7 +31,9 @@ const LocaleMenu: React.FC = (props) => {
           iconProps: {
             iconName: 'FlagPoland',
           },
-          onClick: setLocalePl,
+          onClick: () => {
+            disptatch(setLocale({ locale: 'pl' }));
+          },
         },
         {
           key: 'en',
@@ -47,7 +41,9 @@ const LocaleMenu: React.FC = (props) => {
           iconProps: {
             iconName: 'FlagEngland',
           },
-          onClick: setLocaleEn,
+          onClick: () => {
+            disptatch(setLocale({ locale: 'en' }));
+          },
         },
       ],
     };
@@ -55,12 +51,20 @@ const LocaleMenu: React.FC = (props) => {
     return localMenu;
   }, [t, disptatch]);
 
+  const getLabel = (current: LocalTypes) => {
+    return current === 'pl' ? t('Lang_Polish') : t('Lang_English');
+  };
+
+  const getFlag = (current: LocalTypes): string => {
+    return current === 'pl' ? 'FlagPoland' : 'FlagEngland';
+  };
+
   return (
     <Stack verticalAlign="center">
       <ActionButton
-        text={locale === 'pl' ? t('Lang_Polish') : t('Lang_English')}
+        text={getLabel(locale)}
         menuIconProps={{
-          iconName: locale === 'pl' ? 'FlagPoland' : 'FlagEngland',
+          iconName: getFlag(locale),
         }}
         menuProps={subMenu()}
       />

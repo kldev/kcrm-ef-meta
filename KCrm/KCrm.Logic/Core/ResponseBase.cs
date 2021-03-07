@@ -13,4 +13,16 @@ namespace KCrm.Logic.Core {
             Error = error;
         }
     }
+
+    public class MessageResult {
+        public string Message { get; set; }
+    }
+
+    public class MessageResponse : ResponseBase<MessageResult> {
+        public MessageResponse() : base (new MessageResult ( ) {Message = "OK"}) {
+        } 
+        public MessageResponse(string message) : base (new MessageResult ( ) {Message = message}) {
+
+        }
+    }
 }

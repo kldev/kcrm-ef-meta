@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using KCrm.Data.Context;
+using KCrm.Data.Projects;
 using KCrm.Logic.Services.Projects.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

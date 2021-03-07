@@ -18,8 +18,8 @@ namespace KCrm.Server.Api.Infrastructure.Pipelines {
 
             if (request is AuthentiactedBaseRequest baseRequest) {
                 var appUser = new AppUserIdentity (_httpContext.User);
-                baseRequest.UserId = appUser.UserId;
-                baseRequest.Role = appUser.UserRole;
+                baseRequest.SetFromContext (appUser.UserId, appUser.UserRole);
+
             }
 
             return await next ( );

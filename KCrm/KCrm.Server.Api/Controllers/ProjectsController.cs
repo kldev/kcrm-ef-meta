@@ -21,7 +21,7 @@ namespace KCrm.Server.Api.Controllers {
             _logger = logger;
         }
 
-        [SwaggerResponse (200, "The auth result", typeof (List<Project>))]
+        [SwaggerResponse (200, "The auth result", typeof (List<ProjectEntity>))]
         [SwaggerResponse (500, "The error", typeof (ErrorDto))]
         [HttpGet]
         [Route ("")]

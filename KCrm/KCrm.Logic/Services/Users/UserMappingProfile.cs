@@ -9,7 +9,7 @@ namespace KCrm.Logic.Services.Users {
         }
 
         private void UserMapping() {
-            CreateMap<User, UserInfoDto> ( ).ConstructUsing (x => new UserInfoDto ( ) {
+            CreateMap<UserAccountEntity, UserInfoDto> ( ).ConstructUsing (x => new UserInfoDto ( ) {
                 Email = x.Email,
                 Name = x.Name,
                 LastName = x.LastName

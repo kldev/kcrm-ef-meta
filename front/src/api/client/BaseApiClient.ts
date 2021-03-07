@@ -1,51 +1,23 @@
 import Axios, { AxiosInstance } from 'axios';
-import { AuthDto, ErrorDto } from 'api/response';
-import { authProvider } from 'auth/AuthProvider';
-import authApi from './AuthApiClient';
+import { ErrorDto } from 'api/response';
 
 export class BaseApiClient {
   private api: AxiosInstance;
 
-  private auth: AuthDto;
-
   constructor(private baseUrl: string) {
-    const storeAuth = authProvider.retrieveUser();
-    if (storeAuth) {
-      this.auth = storeAuth as AuthDto;
-    } else {
-      this.auth = { token: '', refreshToken: '', role: 'none' };
-    }
-
     this.api = this.setupAxios();
   }
 
   private setupAxios = () => {
     return Axios.create({
       baseURL: `${this.baseUrl}`,
-      headers: {
-        Authorization: `Bearer ${this.auth.token}`,
-      },
+      withCredentials: true,
       // / handle api status when used
       validateStatus: (status) => {
         return true;
       },
       timeout: 15 * 1000,
     });
-  };
-
-  protected useRefreshToken = async (): Promise<boolean> => {
-    if (this.auth && this.auth.refreshToken) {
-      const refreshTokenResponse = await authApi.useRefreshToken(
-        this.auth.refreshToken
-      );
-      if (refreshTokenResponse.data) {
-        this.auth = refreshTokenResponse.data;
-        authProvider.storeAuth(this.auth);
-        this.api = this.setupAxios();
-        return true;
-      }
-    }
-    return false;
   };
 
   protected post = async <TResponse, TRequest>(
@@ -58,15 +30,10 @@ export class BaseApiClient {
       return { data: response.data };
     }
 
-    if (response.status === 401) {
-      if (await this.useRefreshToken()) {
-        const retryResponse = await this.api.post<TResponse>(path, input);
-
-        if (retryResponse.status === 200) {
-          return { data: retryResponse.data };
-        }
-      }
+    if (response.status === 500) {
+      return { error: (response.data as unknown) as ErrorDto };
     }
+
     return {};
   };
 
@@ -80,15 +47,6 @@ export class BaseApiClient {
       return { data: response.data };
     }
 
-    if (response.status === 401) {
-      if (await this.useRefreshToken()) {
-        const retryResponse = await this.api.put<TResponse>(path, input);
-
-        if (retryResponse.status === 200) {
-          return { data: retryResponse.data };
-        }
-      }
-    }
     return {};
   };
 
@@ -101,15 +59,6 @@ export class BaseApiClient {
       return { data: response.data as TResponse };
     }
 
-    if (response.status === 401) {
-      if (await this.useRefreshToken()) {
-        const retryResponse = await this.api.get<TResponse>(path);
-
-        if (retryResponse.status === 200) {
-          return { data: retryResponse.data };
-        }
-      }
-    }
     return {};
   };
 
@@ -122,15 +71,6 @@ export class BaseApiClient {
       return { data: response.data as TResponse };
     }
 
-    if (response.status === 401) {
-      if (await this.useRefreshToken()) {
-        const retryResponse = await this.api.delete<TResponse>(path);
-
-        if (retryResponse.status === 200) {
-          return { data: retryResponse.data };
-        }
-      }
-    }
     return {};
   };
 }

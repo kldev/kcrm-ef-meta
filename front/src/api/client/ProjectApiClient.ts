@@ -5,6 +5,7 @@ import {
   ProjectStatDto,
   EntityCreatedDto,
   CreateProjectDto,
+  ErrorDto,
 } from 'api/response';
 import { BaseApiClient } from './BaseApiClient';
 
@@ -30,13 +31,13 @@ class ProjectApiClient extends BaseApiClient {
 
   createProject = async (
     project: CreateProjectDto
-  ): Promise<EntityCreatedDto> => {
-    const { data } = await this.post<EntityCreatedDto, CreateProjectDto>(
+  ): Promise<{ data?: EntityCreatedDto; error?: ErrorDto }> => {
+    const { data, error } = await this.post<EntityCreatedDto, CreateProjectDto>(
       '/api/projects/create',
       project
     );
 
-    return data || ({ id: '' } as EntityCreatedDto);
+    return { data, error };
   };
 }
 

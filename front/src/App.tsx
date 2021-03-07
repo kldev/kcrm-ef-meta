@@ -1,5 +1,5 @@
 import React from 'react';
-import { Fabric, Customizations } from '@fluentui/react';
+import { Customizations, ThemeProvider } from '@fluentui/react';
 import './app.scss';
 import { MessageBarProvider, MainApp } from 'components';
 import { LocaleProvider } from 'components/provider';
@@ -42,13 +42,13 @@ const App: React.FC = () => {
   Customizations.applySettings({ theme: myTheme });
   return (
     <BrowserRouter>
-      <Fabric id="app" applyThemeToBody>
+      <ThemeProvider id="app">
         <LocaleProvider>
           <MessageBarProvider>
             <MainApp />
           </MessageBarProvider>
         </LocaleProvider>
-      </Fabric>
+      </ThemeProvider>
     </BrowserRouter>
   );
 };

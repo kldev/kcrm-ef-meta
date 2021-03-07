@@ -1,5 +1,6 @@
 ﻿using System;
 using KCrm.Core.Entity.Projects;
+using KCrm.Core.Entity.Projects.Definitions;
 
 namespace KCrm.Logic.Services.Projects.Model {
     public class ProjectDto {

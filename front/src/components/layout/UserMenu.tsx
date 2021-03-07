@@ -5,10 +5,19 @@ import { ActionButton } from '@fluentui/react/lib/Button';
 
 import { useLocale } from 'i18n/useLocale';
 import { useUsersApiClient } from 'hooks/useUsersApiClient';
+import { useSelector } from 'react-redux';
+import { RootAppState } from 'store';
+
+interface StateProps {
+  fullName: string;
+}
 
 const UserMenu: React.FC = (props) => {
   const t = useLocale();
   const { logOut } = useUsersApiClient();
+  const { fullName } = useSelector<RootAppState, StateProps>(({ app }) => ({
+    fullName: app.fullname || app.username,
+  }));
 
   const handleSignOut = useCallback(() => {
     logOut();
@@ -49,7 +58,8 @@ const UserMenu: React.FC = (props) => {
   }, [t, handleSignOut]);
 
   return (
-    <Stack verticalAlign="center">
+    <Stack verticalAlign="center" horizontal={true}>
+      <span style={{ fontWeight: 'bold' }}>{fullName}</span>
       <ActionButton
         iconProps={{ iconName: 'CollapseMenu' }}
         menuIconProps={{ iconName: '' }}

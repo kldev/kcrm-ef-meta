@@ -4,8 +4,12 @@ import { authProvider } from 'auth/AuthProvider';
 import { useHistory } from 'react-router';
 import { Routes } from 'model/Routes';
 import ContentRouter from 'components/content/ContentRouter';
-import LayoutCommandBar from './LayoutCommandBar';
+import { setSession } from 'store/app';
+
+import { useDispatch } from 'react-redux';
+import { SessionDto } from 'api/response';
 import NavigationMenu from './NavigationMenu';
+import LayoutCommandBar from './LayoutCommandBar';
 
 const contentStackStyles: IStackStyles = {
   root: {
@@ -24,12 +28,20 @@ const containerStackStyles: IStackStyles = {
 
 const MainLayout: React.FC = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   useEffect(() => {
-    const auth = authProvider.retrieveUser();
-    if (!auth) {
-      history.push(Routes.login);
-    }
-  }, [history]);
+    const load = async () => {
+      const auth = await authProvider.retrieveUser();
+      if (!auth) {
+        history.push(Routes.login);
+        return;
+      }
+
+      dispatch(setSession(auth as SessionDto));
+    };
+
+    load();
+  }, [history, dispatch]);
 
   return (
     <Stack verticalFill styles={containerStackStyles}>

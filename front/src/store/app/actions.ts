@@ -6,6 +6,7 @@ const actionCreator = actionCreatorFactory('app');
 interface Role {
   role: RoleTypes;
   username: string;
+  fullname: string;
 }
 
 export const setSession = actionCreator<Role>('setSession');

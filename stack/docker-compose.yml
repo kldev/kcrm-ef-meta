@@ -7,6 +7,14 @@ services:
         volumes:
             - pg.data:/var/lib/postgresql/data        
         environment:            
-            POSTGRES_PASSWORD: developer.7777
+            POSTGRES_USER: crm
+            POSTGRES_PASSWORD: crm.7777
+    webadmin:
+        image: dpage/pgadmin4:5.0
+        ports:
+            - "${ADMIN_PORT:-9999}:80"
+        environment:         
+            PGADMIN_DEFAULT_EMAIL: admin@mail.fake
+            PGADMIN_DEFAULT_PASSWORD: admin123
 volumes: 
     pg.data:            

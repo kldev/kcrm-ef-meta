@@ -1,12 +1,9 @@
 import React, { useCallback } from 'react';
 
-import {
-  DatePicker,
-  DayOfWeek,
-  IDatePickerStrings,
-} from '@fluentui/react/lib/DatePicker';
+import { DatePicker, IDatePickerStrings } from '@fluentui/react/lib/DatePicker';
 import { useLocale } from 'i18n/useLocale';
 import { AllTranslationKeys } from 'i18n/en';
+import { DayOfWeek } from '@fluentui/react/lib/Calendar';
 
 interface Props {
   placeholder?: string;

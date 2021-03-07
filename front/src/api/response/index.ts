@@ -1,5 +1,5 @@
 export * from './ErrorDto';
-export * from './AuthDto';
+export * from './SessionDto';
 export * from './projects/ProjectType';
 export * from './projects/ProjectDto';
 export * from './projects/ProjectStatDto';

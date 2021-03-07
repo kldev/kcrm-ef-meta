@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
 using KCrm.Core.Entity.Projects;
+using KCrm.Core.Entity.Projects.Definitions;
 using KCrm.Core.Exceptions;
-using KCrm.Data.Context;
+using KCrm.Data.Projects;
 using KCrm.Logic.Services.Projects.Notifications;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace KCrm.Logic.Services.Projects.Commands {
 
         public async Task<Guid> Handle(CreateProjectCommand request, CancellationToken cancellationToken) {
 
-            var project = _mapper.Map<Project> (request);
+            var project = _mapper.Map<ProjectEntity> (request);
 
             var alreadyUsedName = await _projectContext.Projects.AsNoTracking ( )
                 .AnyAsync (x => x.Name == request.Name, cancellationToken);
@@ -41,7 +42,7 @@ namespace KCrm.Logic.Services.Projects.Commands {
             await _projectContext.Projects.AddAsync (project, cancellationToken);
             await _projectContext.SaveChangesAsync (cancellationToken);
 
-            await _mediator.Publish (new SendMailOnProjectCreated ( ) { ProjectId = project.Id });
+            await _mediator.Publish (new SendMailOnProjectCreated ( ) { ProjectId = project.Id }, cancellationToken);
 
             return project.Id;
         }
