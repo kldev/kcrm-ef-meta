@@ -20,4 +20,8 @@
     <ProjectReference Include="..\KCrm.Data\KCrm.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\UsersAvatar\Model" />
+  </ItemGroup>
+
 </Project>

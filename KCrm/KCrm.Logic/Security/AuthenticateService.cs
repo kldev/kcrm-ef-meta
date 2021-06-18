@@ -73,25 +73,29 @@ namespace KCrm.Logic.Security {
 
             return new List<Claim>
             {
-                new Claim(AppUserIdentity.ClaimTypeUserId, userAccountEntity.Id.ToString("D")),
+                new Claim(AppUserIdentityClaimNames.ClaimTypeUserId, userAccountEntity.Id.ToString("D")),
                 new Claim(ClaimTypes.Name, userAccountEntity.Username),
-                new Claim(AppUserIdentity.ClaimTypeIsAdmin, isAdmin.ToString()),
-                new Claim(AppUserIdentity.ClaimTypeIsRoot, isRoot.ToString()),
-                new Claim(AppUserIdentity.ClaimTypeIsGuest, isGuest.ToString()),
+                new Claim(AppUserIdentityClaimNames.ClaimTypeIsAdmin, isAdmin.ToString()),
+                new Claim(AppUserIdentityClaimNames.ClaimTypeIsRoot, isRoot.ToString()),
+                new Claim(AppUserIdentityClaimNames.ClaimTypeIsGuest, isGuest.ToString()),
                 new Claim(ClaimTypes.Role, role),
-                new Claim(AppUserIdentity.ClaimTypeFullName, userAccountEntity.Name + " " + userAccountEntity.LastName )
+                new Claim(AppUserIdentityClaimNames.ClaimTypeFullName, userAccountEntity.Name + " " + userAccountEntity.LastName ),
+                new Claim(AppUserIdentityClaimNames.ClaimAvatarId, userAccountEntity.AvatarId ?? "")
             };
         }
 
-       
-        private async Task<ResponseBase<AuthDto>> CreateAuth(List<Claim> claims, Guid userId,  CancellationToken cancellationToken) {
+
+        private async Task<ResponseBase<AuthDto>> CreateAuth(List<Claim> claims, Guid userId,
+            CancellationToken cancellationToken) {
             var token = _tokenService.GenerateToken (claims);
             var user = await _appUserContext.UserAccounts.FirstAsync (x => x.Id == userId, cancellationToken);
-            
+
             return new ResponseBase<AuthDto> (new AuthDto {
                 Token = token,
                 Role = claims.FirstOrDefault (x => x.Type == ClaimTypes.Role)?.Value,
-                FullName = (user.Name + " " + user.LastName).Trim(), Username = user.Username
+                FullName = (user.Name + " " + user.LastName).Trim ( ),
+                Username = user.Username,
+                AvatarId = user.AvatarId
             });
         }
 

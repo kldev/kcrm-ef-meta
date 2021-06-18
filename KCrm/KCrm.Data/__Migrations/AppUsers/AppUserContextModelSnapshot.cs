@@ -27,6 +27,10 @@ namespace KCrm.Data.__Migrations.AppUsers
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<string>("AvatarId")
+                        .HasColumnType("text")
+                        .HasColumnName("avatar_id");
+
                     b.Property<DateTime?>("Created")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created");

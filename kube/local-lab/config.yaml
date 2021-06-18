@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: crm-api-config
+  labels:
+    app: crm-api-config
+data:
+  AuthConfig__Secret: "PRWEc*4NjXQfWP0@33b0zOifQsTLR%"
+  ConnectionStrings__AppConnection: "Server=crm-db-service;Port=5432;Database=crm;Username=crm;Password=crm#7777"
+  ConnectionStrings__AegisConnection: "Server=crm-db-service;Port=5432;Database=crm;Username=crm;Password=crm#7777"
+  Minio__MinioKey: "JohnRambo"
+  Minio__MinioSecret: "JohnRambo#7777"
+  Minio__MinioEndpoint: "http://s3.local.lab.pl"
+  

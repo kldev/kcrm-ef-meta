@@ -21,7 +21,7 @@ services:
         links: 
             - web-db
         ports:
-            - "${WEBAPI_PORT:-30788}:80"    
+            - "${WEBAPI_PORT:-8181}:80"    
     front:
         image: crm-front:${APP_TAGS:-latest}
         ports:
@@ -33,6 +33,18 @@ services:
                 APP_VER: ${APP_TAGS}
         links:
             - web-api
+    files:
+        image: minio/minio:RELEASE.2021-03-26T00-00-41Z     # create /storage/avatars /storage/others /storage/documents directory after first run
+        volumes:
+            - files.data:/storage    
+        command:  server /storage
+        environment:
+            MINIO_ROOT_USER: "crmfiles"
+            MINIO_ROOT_PASSWORD: "crmfiles#7777"
+            #MINIO_REGION: "eu-west-1"  
+        links:
+            - web-api
 
 volumes: 
-    pg.data:            
+    pg.data:        
+    files.data:    

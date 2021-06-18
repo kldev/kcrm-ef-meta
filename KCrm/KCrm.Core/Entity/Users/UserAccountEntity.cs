@@ -11,5 +11,7 @@ namespace KCrm.Core.Entity.Users {
         public string Provider { get; set; }
         public string ProviderId { get; set; }
         public ICollection<UserHasRoleEntity> UserRoles { get; set; } = new List<UserHasRoleEntity> ( );
+        
+        public string AvatarId { get; set; }
     }
 }

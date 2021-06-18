@@ -4,4 +4,5 @@ export interface SessionDto {
   username: string;
   fullname: string;
   role: RoleTypes;
+  avatarId: string | null;
 }

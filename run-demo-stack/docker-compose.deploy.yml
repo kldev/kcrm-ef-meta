@@ -18,9 +18,13 @@ services:
             interval: 10s
             timeout: 10s
             retries: 5
-            start_period: 15s
+            start_period: 60s
         environment:
             AuthConfig__Secret: "PRWEc*4NjXQfWP0@33b0zOifQsTLR%"
             ConnectionStrings__AppConnection: "Server=web-db;Port=5432;Database=kcrm;Username=postgres;Password=E^qb9MDM!kLpyj$rHu8!GaJQRuu"
-            ConnectionStrings__AegisConnection: "Server=web-db;Port=5432;Database=kcrm;Username=postgres;Password=E^qb9MDM!kLpyj$rHu8!GaJQRuu"                  
+            ConnectionStrings__AegisConnection: "Server=web-db;Port=5432;Database=kcrm;Username=postgres;Password=E^qb9MDM!kLpyj$rHu8!GaJQRuu"     
+            Minio__MinioEndpoint: "http://files:9000"    
+            AppSeedOptions__ RootPassword: "crm7070"
+  },
+
    

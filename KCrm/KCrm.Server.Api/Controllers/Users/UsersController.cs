@@ -9,7 +9,7 @@ using KCrm.Server.Api.Config;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KCrm.Server.Api.Controllers {
+namespace KCrm.Server.Api.Controllers.Users {
     [Route ("api/users")]
     public class UsersController : AppAuthorizedControllerBase {
 
@@ -43,7 +43,7 @@ namespace KCrm.Server.Api.Controllers {
             var user = AppUser;
             if (user != null) {
                 var sessionResponse = new ResponseBase<SessionDto> (new SessionDto ( ) {
-                    Username = user.Username, Fullname = user.FullName, Role = user.UserRole
+                    Username = user.Username, Fullname = user.FullName, Role = user.UserRole, AvatarId = user.AvatarId // create mapper
                 });
 
                 return ApiResult (sessionResponse);

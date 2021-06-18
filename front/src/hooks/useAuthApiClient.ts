@@ -27,6 +27,7 @@ export const useAuthApiClient = () => {
           username,
           role: data.role,
           fullname: data.fullname,
+          avatarId: data.avatarId,
         })
       );
 

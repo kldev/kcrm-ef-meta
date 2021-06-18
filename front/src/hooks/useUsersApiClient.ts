@@ -15,7 +15,9 @@ export const useUsersApiClient = () => {
   const logOut = async () => {
     await usersApi.logOut();
 
-    dispatch(setSession({ role: 'none', username: '', fullname: '' }));
+    dispatch(
+      setSession({ role: 'none', username: '', fullname: '', avatarId: '' })
+    );
 
     dispatch(
       addMessage({

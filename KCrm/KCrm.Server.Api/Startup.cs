@@ -33,6 +33,8 @@ namespace KCrm.Server.Api {
             services.AddAppCors (Configuration);
             services.AddSwaggerService ( );
             services.AddJwt (Configuration);
+            services.AddS3Minio (Configuration);
+            
             services.AddAppHealthCheck (Configuration);
             services.AddHostedService<DbMigrateService> ( );
         }

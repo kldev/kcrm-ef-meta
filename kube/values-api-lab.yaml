@@ -1,0 +1,18 @@
+apiConfigMapEnvName: "crm-api-config"
+replicaCount: 1
+
+fullnameOverride: crm-api
+
+rootPassword: "demo123"
+corsValue: "http://crm.local.lab.pl"
+
+imagePullSecrets:
+  - name: regcred
+
+ingress:
+  enabled: true
+  hosts:
+    - host: crm-api.local.lab.pl
+      paths:
+        - path: /
+          pathType: ImplementationSpecific

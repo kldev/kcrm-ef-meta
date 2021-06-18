@@ -38,13 +38,13 @@ namespace KCrm.Server.Api.Controllers {
                     new CookieOptions ( ) {
                         HttpOnly = true,
                         Path = "/",
-                        Secure = false, // for production with HTTP should be true
+                        Secure = false, // for production with HTTPS should be true
                         SameSite = SameSiteMode.Strict,
                         Expires = DateTimeOffset.Now.AddDays (1),
                     });
 
                 var sessionResponse = new ResponseBase<SessionDto> (new SessionDto ( ) {
-                    Username = result.Username, Fullname = result.FullName, Role = result.Role
+                    Username = result.Username, Fullname = result.FullName, Role = result.Role, AvatarId = result.AvatarId
                 });
 
                 return ApiResult (sessionResponse);
